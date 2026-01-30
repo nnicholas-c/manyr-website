@@ -1,115 +1,180 @@
 'use client';
 
-import { motion, type Variants } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { BlurredEllipses, Button } from '@/components';
 
-// Large animated headline like anima.ai - "Growing nature-inspired companies"
-function AnimatedHeadline() {
-  // Split into lines for dramatic stacking effect
-  const lines = ['Governing', 'AI agents'];
-  
-  const container: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.5,
-      },
-    },
-  };
-
-  const lineAnimation: Variants = {
-    hidden: { 
-      opacity: 0, 
-      y: 80,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 1.2,
-        ease: [0.25, 0.1, 0.25, 1],
-      },
-    },
-  };
-
-  return (
-    <motion.h1
-      className="heading-display text-[clamp(3.5rem,12vw,10rem)] leading-[0.95] tracking-[-0.04em]"
-      variants={container}
-      initial="hidden"
-      animate="visible"
-    >
-      {lines.map((line, index) => (
-        <motion.span
-          key={index}
-          className="block overflow-hidden"
-          variants={lineAnimation}
-        >
-          <span className="block">{line}</span>
-        </motion.span>
-      ))}
-    </motion.h1>
-  );
-}
-
 export default function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
+  const linesRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const pillarsRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const sectionIndicatorRef = useRef<HTMLDivElement>(null);
+
+  const lines = ['Governing', 'autonomous', 'AI agents'];
+  const pillars = [
+    "→ Technology's power to transform work",
+    "→ Autonomy's need for accountability",
+    "→ Enterprise's demand for control",
+  ];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Check for reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReducedMotion) {
+        gsap.set([...linesRef.current, pillarsRef.current, ctaRef.current, sectionIndicatorRef.current], {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+        });
+        return;
+      }
+
+      // Create master timeline
+      const tl = gsap.timeline({ delay: 0.3 });
+
+      // Headline lines reveal with blur-in effect - staggered
+      linesRef.current.forEach((line, index) => {
+        if (line) {
+          tl.fromTo(
+            line,
+            {
+              opacity: 0,
+              y: 80,
+              filter: 'blur(20px)',
+            },
+            {
+              opacity: 1,
+              y: 0,
+              filter: 'blur(0px)',
+              duration: 1,
+              ease: 'power2.out',
+            },
+            index * 0.15
+          );
+        }
+      });
+
+      // Pillar statements fade in with stagger
+      if (pillarsRef.current) {
+        const pillarItems = pillarsRef.current.children;
+        tl.fromTo(
+          pillarItems,
+          {
+            opacity: 0,
+            y: 30,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: 'power2.out',
+          },
+          '-=0.3'
+        );
+      }
+
+      // CTA buttons fade in
+      if (ctaRef.current) {
+        tl.fromTo(
+          ctaRef.current,
+          {
+            opacity: 0,
+            y: 20,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+          },
+          '-=0.3'
+        );
+      }
+
+      // Section indicator
+      if (sectionIndicatorRef.current) {
+        tl.fromTo(
+          sectionIndicatorRef.current,
+          {
+            opacity: 0,
+          },
+          {
+            opacity: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+          },
+          '-=0.2'
+        );
+      }
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative min-h-[100svh] flex flex-col justify-between overflow-hidden pt-32 pb-12">
+    <section
+      ref={heroRef}
+      className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden pt-32 pb-16 md:pb-20"
+    >
       <BlurredEllipses
         ellipses={[
-          { color: 'var(--ellipse-yellow)', size: 900, x: '-20%', y: '-15%', parallaxStrength: 0.03 },
-          { color: 'var(--ellipse-lavender)', size: 700, x: '75%', y: '50%', parallaxStrength: 0.05 },
-          { color: 'var(--ellipse-sage)', size: 500, x: '10%', y: '80%', parallaxStrength: 0.04 },
+          { color: 'var(--ellipse-yellow)', size: 1100, x: '-25%', y: '-15%', parallaxStrength: 0.02 },
+          { color: 'var(--ellipse-lavender)', size: 900, x: '70%', y: '-10%', parallaxStrength: 0.03 },
+          { color: 'var(--ellipse-peach)', size: 800, x: '85%', y: '55%', parallaxStrength: 0.025 },
+          { color: 'var(--ellipse-sage)', size: 700, x: '-10%', y: '65%', parallaxStrength: 0.035 },
+          { color: 'var(--ellipse-mint)', size: 600, x: '40%', y: '80%', parallaxStrength: 0.04 },
         ]}
       />
 
-      <div className="relative z-10 flex-1 flex flex-col justify-center max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20 w-full">
-        <AnimatedHeadline />
+      <div className="relative z-10 max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20 w-full">
+        <div className="max-w-5xl">
+          {/* Animated headline */}
+          <h1 className="heading-display text-[clamp(3rem,10vw,8rem)] leading-[1.05] tracking-[-0.03em] mb-16 md:mb-20">
+            {lines.map((line, index) => (
+              <span
+                key={index}
+                ref={(el) => { linesRef.current[index] = el; }}
+                className="block"
+                style={{ opacity: 0 }}
+              >
+                {line}
+              </span>
+            ))}
+          </h1>
 
-        {/* Subheadline - positioned like anima.ai */}
-        <motion.div
-          className="mt-12 md:mt-16 max-w-xl"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <p className="text-lg md:text-xl text-[var(--foreground-muted)] leading-relaxed">
-            We build the control plane for autonomous AI systems. Authorize, audit, 
-            and constrain every action your agents take.
-          </p>
-        </motion.div>
+          {/* Three pillar statements */}
+          <div ref={pillarsRef} className="space-y-4 md:space-y-5 mb-12 md:mb-16">
+            {pillars.map((pillar, index) => (
+              <p
+                key={index}
+                className="text-base md:text-lg text-[var(--foreground)] leading-relaxed"
+                style={{ opacity: 0 }}
+              >
+                {pillar}
+              </p>
+            ))}
+          </div>
 
-        {/* CTA - minimal like anima.ai */}
-        <motion.div
-          className="mt-10 md:mt-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.6 }}
-        >
-          <Button href="/demo" variant="secondary" className="group">
-            <span>KNOW MORE</span>
-            <motion.span
-              className="inline-block ml-2"
-              initial={{ x: 0 }}
-              whileHover={{ x: 4 }}
-            >
-              →
-            </motion.span>
-          </Button>
-        </motion.div>
+          {/* CTA */}
+          <div ref={ctaRef} className="flex flex-wrap gap-4" style={{ opacity: 0 }}>
+            <Button href="/demo" variant="secondary" className="group">
+              <span>DISCOVER</span>
+              <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                →
+              </span>
+            </Button>
+          </div>
+        </div>
+
+        {/* Section indicator */}
+        <div ref={sectionIndicatorRef} className="mt-20 md:mt-28" style={{ opacity: 0 }}>
+          <div className="section-number">001/ ABOUT</div>
+        </div>
       </div>
-
-      {/* Section indicator at bottom left - anima.ai style */}
-      <motion.div
-        className="relative z-10 max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20 w-full"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
-      >
-        <div className="section-number">001/ ABOUT</div>
-      </motion.div>
     </section>
   );
 }

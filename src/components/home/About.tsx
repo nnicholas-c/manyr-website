@@ -1,103 +1,140 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Section } from '@/components';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function About() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const contentRef = useRef<HTMLDivElement>(null);
+  const leftColRef = useRef<HTMLDivElement>(null);
+  const rightColRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReducedMotion) {
+        gsap.set([leftColRef.current, rightColRef.current], {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+        });
+        return;
+      }
+
+      // Left column animation
+      if (leftColRef.current) {
+        gsap.fromTo(
+          leftColRef.current,
+          {
+            opacity: 0,
+            y: 50,
+            filter: 'blur(10px)',
+          },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 0.9,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: leftColRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // Right column items with stagger
+      if (rightColRef.current) {
+        const items = rightColRef.current.children;
+        gsap.fromTo(
+          items,
+          {
+            opacity: 0,
+            y: 40,
+            filter: 'blur(8px)',
+          },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 0.7,
+            stagger: 0.15,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: rightColRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+    }, contentRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <Section 
-      id="about" 
-      number="001" 
-      title="We are your partner"
-      showEllipses
+    <Section
+      id="about"
+      number="001"
+      title="About"
+      ellipses={[
+        { color: 'var(--ellipse-yellow)', size: 900, x: '-25%', y: '-20%', parallaxStrength: 0.03 },
+        { color: 'var(--ellipse-peach)', size: 750, x: '80%', y: '50%', parallaxStrength: 0.04 },
+        { color: 'var(--ellipse-cream)', size: 600, x: '60%', y: '-30%', parallaxStrength: 0.035 },
+      ]}
     >
-      <div ref={ref} className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-        {/* Left side - Editorial text like anima.ai */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-          transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <p className="text-xl md:text-2xl text-[var(--foreground-muted)] leading-relaxed mb-8">
-            We&apos;re a governance layer for AI agents. That means:
+      <div ref={contentRef} className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+        {/* Left side - Primary messaging */}
+        <div ref={leftColRef} style={{ opacity: 0 }}>
+          <h2 className="text-2xl md:text-3xl text-[var(--foreground)] leading-relaxed mb-8 font-light">
+            We are a governance layer for autonomous AI systems.
+          </h2>
+          <p className="text-base md:text-lg text-[var(--foreground-muted)] leading-relaxed">
+            AI agents are moving from tools that assist to systems that act—executing
+            multi-step workflows across databases, APIs, and internal systems with minimal
+            human oversight.
           </p>
-          <div className="space-y-4">
-            {[
-              "→ We don't just monitor, we enforce",
-              "→ We don't slow down, we enable safely",
-              "→ We work at the action boundary to make decisions in real-time",
-            ].map((line, index) => (
-              <motion.p
-                key={index}
-                className="text-xl md:text-2xl text-[var(--foreground)] leading-relaxed"
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                transition={{ 
-                  duration: 0.7, 
-                  delay: 0.3 + index * 0.15,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
-              >
-                {line}
-              </motion.p>
-            ))}
-          </div>
-          <motion.p
-            className="mt-10 text-lg text-[var(--foreground-muted)] leading-relaxed"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.7, delay: 0.9 }}
-          >
-            Whether you&apos;re deploying coding agents, research assistants, or autonomous 
-            workflows, we&apos;re here to help you ship with confidence.
-          </motion.p>
-        </motion.div>
+        </div>
 
-        {/* Right side - The Select visualization */}
-        <motion.div
-          className="relative"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <div className="bg-white/60 backdrop-blur-sm border border-[var(--border)] rounded-2xl p-8 md:p-10">
-            <div className="section-number mb-8">
-              The Select Function
-            </div>
-            <div className="space-y-5">
-              {[
-                { label: 'Allow', color: '#E8F5E9', textColor: '#2E7D32', desc: 'Action proceeds normally' },
-                { label: 'Deny', color: '#FFEBEE', textColor: '#C62828', desc: 'Action is blocked' },
-                { label: 'Approve', color: '#FFF3E0', textColor: '#E65100', desc: 'Requires human review' },
-                { label: 'Constrain', color: '#E3F2FD', textColor: '#1565C0', desc: 'Action is modified' },
-              ].map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  className="flex items-center gap-5"
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: 0.7 + index * 0.12,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
-                >
-                  <span
-                    className="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full"
-                    style={{ backgroundColor: item.color, color: item.textColor }}
-                  >
-                    {item.label}
-                  </span>
-                  <span className="text-sm text-[var(--foreground-muted)]">{item.desc}</span>
-                </motion.div>
-              ))}
-            </div>
+        {/* Right side - Arrow statements */}
+        <div ref={rightColRef} className="space-y-6">
+          <div style={{ opacity: 0 }}>
+            <p className="text-base md:text-lg text-[var(--foreground)] leading-relaxed mb-2">
+              → We don&apos;t just monitor
+            </p>
+            <p className="text-sm md:text-base text-[var(--foreground-muted)] leading-relaxed pl-6">
+              We intercept every agent action at the execution boundary and make real-time
+              decisions: allow, deny, approve, or constrain.
+            </p>
           </div>
-        </motion.div>
+
+          <div style={{ opacity: 0 }}>
+            <p className="text-base md:text-lg text-[var(--foreground)] leading-relaxed mb-2">
+              → We don&apos;t slow you down
+            </p>
+            <p className="text-sm md:text-base text-[var(--foreground-muted)] leading-relaxed pl-6">
+              Our hybrid evaluation engine resolves most actions in under 5ms using
+              deterministic rules, with optional LLM judges for ambiguous cases.
+            </p>
+          </div>
+
+          <div style={{ opacity: 0 }}>
+            <p className="text-base md:text-lg text-[var(--foreground)] leading-relaxed mb-2">
+              → We work at the boundary
+            </p>
+            <p className="text-sm md:text-base text-[var(--foreground-muted)] leading-relaxed pl-6">
+              We sit between your agents and the tools they use, creating a
+              vendor-neutral control plane with tamper-evident audit trails.
+            </p>
+          </div>
+        </div>
       </div>
     </Section>
   );

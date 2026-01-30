@@ -1,174 +1,165 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { motion, useInView, type Variants } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Section, Button } from '@/components';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Contact() {
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    company: '',
-    message: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const contentRef = useRef<HTMLDivElement>(null);
+  const statementRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsSubmitting(false);
-    setSubmitted(true);
-  };
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const fieldVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { 
-        duration: 0.5, 
-        delay: 0.3 + i * 0.1,
-        ease: [0.25, 0.1, 0.25, 1] as const,
-      },
-    }),
-  };
+      if (prefersReducedMotion) {
+        gsap.set([statementRef.current, ctaRef.current, detailsRef.current], {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+        });
+        return;
+      }
+
+      // Statement with blur reveal
+      if (statementRef.current) {
+        gsap.fromTo(
+          statementRef.current,
+          {
+            opacity: 0,
+            y: 50,
+            filter: 'blur(12px)',
+          },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: statementRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // CTA fade in
+      if (ctaRef.current) {
+        gsap.fromTo(
+          ctaRef.current,
+          {
+            opacity: 0,
+            y: 20,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: ctaRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // Contact details
+      if (detailsRef.current) {
+        const items = detailsRef.current.children;
+        gsap.fromTo(
+          items,
+          {
+            opacity: 0,
+            y: 20,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: detailsRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+    }, contentRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <Section id="contact" number="007" title="Have a seat.">
-      <div ref={ref} className="grid md:grid-cols-2 gap-12 md:gap-20">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <p className="text-lg md:text-xl text-[#4A4A4A] leading-relaxed mb-6">
-            Ready to bring governance to your AI agents? We&apos;re working with 
-            forward-thinking teams building the next generation of autonomous systems.
+    <Section
+      id="contact"
+      number="007"
+      title="Contact"
+      ellipses={[
+        { color: 'var(--ellipse-lavender)', size: 950, x: '-20%', y: '30%', parallaxStrength: 0.03 },
+        { color: 'var(--ellipse-yellow)', size: 850, x: '80%', y: '-15%', parallaxStrength: 0.04 },
+        { color: 'var(--ellipse-peach)', size: 700, x: '50%', y: '90%', parallaxStrength: 0.035 },
+      ]}
+    >
+      <div ref={contentRef} className="max-w-4xl mx-auto">
+        {/* Large statement */}
+        <div ref={statementRef} className="text-center mb-12 md:mb-16" style={{ opacity: 0 }}>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl text-[var(--foreground)] font-light leading-tight tracking-tight mb-8">
+            We&apos;re building the governance infrastructure for autonomous AI.
+          </h2>
+          <p className="text-base md:text-lg text-[var(--foreground-muted)] leading-relaxed max-w-2xl mx-auto">
+            If you&apos;re deploying agents that touch sensitive systems, we&apos;d love to hear
+            about your challenges. Reach out to explore early pilots or just to learn more.
           </p>
-          <p className="text-lg md:text-xl text-[#4A4A4A] leading-relaxed">
-            Tell us about your use case, and let&apos;s explore how Manyr can help 
-            you deploy autonomy safely.
-          </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          {submitted ? (
-            <motion.div 
-              className="bg-[#E8F5E9] border border-[#2E7D32]/20 rounded-2xl p-8 text-center"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        {/* CTA */}
+        <div ref={ctaRef} className="text-center" style={{ opacity: 0 }}>
+          <Button href="/contact" variant="secondary" className="group">
+            <span>GET IN TOUCH</span>
+            <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </Button>
+        </div>
+
+        {/* Contact details */}
+        <div ref={detailsRef} className="mt-16 md:mt-20 grid md:grid-cols-2 gap-8 text-center md:text-left">
+          <div style={{ opacity: 0 }}>
+            <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider mb-2">
+              Email
+            </p>
+            <a
+              href="mailto:hello@manyr.ai"
+              className="text-base md:text-lg text-[var(--foreground)] hover:opacity-60 transition-opacity"
             >
-              <motion.div 
-                className="text-4xl mb-4"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2, type: 'spring', stiffness: 300, damping: 20 }}
-              >
-                ✓
-              </motion.div>
-              <h3 className="font-serif text-2xl mb-2">Thanks for reaching out</h3>
-              <p className="text-[#4A4A4A]">We&apos;ll be in touch soon.</p>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <motion.div
-                custom={0}
-                variants={fieldVariants}
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
-              >
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={formState.name}
-                  onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                  required
-                  placeholder="Your name"
-                  className="w-full"
-                />
-              </motion.div>
-              <motion.div
-                custom={1}
-                variants={fieldVariants}
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
-              >
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={formState.email}
-                  onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                  required
-                  placeholder="you@company.com"
-                  className="w-full"
-                />
-              </motion.div>
-              <motion.div
-                custom={2}
-                variants={fieldVariants}
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
-              >
-                <label htmlFor="company" className="block text-sm font-medium mb-2">
-                  Company
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  value={formState.company}
-                  onChange={(e) => setFormState({ ...formState, company: e.target.value })}
-                  placeholder="Your company"
-                  className="w-full"
-                />
-              </motion.div>
-              <motion.div
-                custom={3}
-                variants={fieldVariants}
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
-              >
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  value={formState.message}
-                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  rows={4}
-                  placeholder="Tell us about your use case..."
-                  className="w-full resize-none"
-                />
-              </motion.div>
-              <motion.div
-                custom={4}
-                variants={fieldVariants}
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
-              >
-                <Button type="submit" variant="primary" disabled={isSubmitting} className="w-full">
-                  {isSubmitting ? 'Sending...' : 'Send message'}
-                  {!isSubmitting && <span aria-hidden="true">→</span>}
-                </Button>
-              </motion.div>
-            </form>
-          )}
-        </motion.div>
+              hello@manyr.ai
+            </a>
+          </div>
+          <div style={{ opacity: 0 }}>
+            <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider mb-2">
+              LinkedIn
+            </p>
+            <a
+              href="https://linkedin.com/company/manyr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-base md:text-lg text-[var(--foreground)] hover:opacity-60 transition-opacity"
+            >
+              linkedin.com/company/manyr
+            </a>
+          </div>
+        </div>
       </div>
     </Section>
   );

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navigation, Footer } from "@/components";
+import { Navigation, Footer, SmoothScroll, CursorBlob, GooeyTransitionLayer } from "@/components";
 
 export const metadata: Metadata = {
   title: "Manyr | Agent Firewall for Autonomous AI",
@@ -22,9 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased bg-[#F6F3EE] text-[#1C1C1C]">
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
+        <SmoothScroll>
+          <CursorBlob />
+          <GooeyTransitionLayer />
+          <Navigation />
+          <main>{children}</main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );

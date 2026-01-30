@@ -15,14 +15,16 @@ interface BlurredEllipsesProps {
   className?: string;
 }
 
-// Default ellipses matching anima.ai style - larger, corner-positioned, stronger colors
+// Default ellipses matching anima.ai style - larger, corner-positioned, vibrant colors
 const defaultEllipses: Ellipse[] = [
-  // Top left - large yellow
-  { color: 'var(--ellipse-yellow)', size: 1000, x: '-25%', y: '-20%', parallaxStrength: 0.03 },
-  // Bottom right - lavender
-  { color: 'var(--ellipse-lavender)', size: 800, x: '70%', y: '60%', parallaxStrength: 0.04 },
+  // Top left - large yellow/cream
+  { color: 'var(--ellipse-yellow)', size: 1200, x: '-30%', y: '-25%', parallaxStrength: 0.03 },
+  // Top right - lavender
+  { color: 'var(--ellipse-lavender)', size: 900, x: '75%', y: '-15%', parallaxStrength: 0.035 },
+  // Bottom right - peach
+  { color: 'var(--ellipse-peach)', size: 1000, x: '80%', y: '65%', parallaxStrength: 0.04 },
   // Bottom left - sage green
-  { color: 'var(--ellipse-sage)', size: 600, x: '-10%', y: '75%', parallaxStrength: 0.05 },
+  { color: 'var(--ellipse-sage)', size: 800, x: '-20%', y: '70%', parallaxStrength: 0.05 },
 ];
 
 function ParallaxEllipse({ ellipse, index }: { ellipse: Ellipse; index: number }) {
@@ -46,15 +48,15 @@ function ParallaxEllipse({ ellipse, index }: { ellipse: Ellipse; index: number }
         left: ellipse.x,
         top: ellipse.y,
         background: ellipse.color,
-        filter: 'blur(120px)',
-        opacity: 0.7,
+        filter: 'blur(100px)',
+        opacity: 0.85,
         y,
       }}
       initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 0.7, scale: 1 }}
-      transition={{ 
-        duration: 1.5, 
-        delay: index * 0.2,
+      animate={{ opacity: 0.85, scale: 1 }}
+      transition={{
+        duration: 1.8,
+        delay: index * 0.15,
         ease: [0.25, 0.1, 0.25, 1],
       }}
     />
