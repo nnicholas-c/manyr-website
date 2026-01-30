@@ -3,8 +3,16 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SpotRiskAnimation, BuildGuardrailsAnimation, ScaleConfidenceAnimation } from './ProductAnimations';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Animation components mapped by step index
+const stepAnimations = [
+  SpotRiskAnimation,
+  BuildGuardrailsAnimation,
+  ScaleConfidenceAnimation,
+];
 
 interface Step {
   title: string;
@@ -152,45 +160,15 @@ export default function Product() {
                 </p>
               </div>
 
-              {/* Abstract visual */}
+              {/* Animated visual */}
               <div 
                 className="step-image relative aspect-[4/3] rounded-2xl overflow-hidden border border-[var(--border)]" 
-                style={{ opacity: 0, background: step.gradient }}
+                style={{ opacity: 0 }}
               >
-                {/* HUD Grid pattern overlay */}
-                <div 
-                  className="absolute inset-0 opacity-30"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(var(--accent-primary-muted) 1px, transparent 1px),
-                      linear-gradient(90deg, var(--accent-primary-muted) 1px, transparent 1px)
-                    `,
-                    backgroundSize: '40px 40px',
-                  }}
-                />
-                {/* Abstract glows */}
-                <div 
-                  className="absolute w-32 h-32 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle, var(--accent-primary-glow) 0%, transparent 70%)',
-                    top: '20%',
-                    left: '20%',
-                    filter: 'blur(30px)',
-                  }}
-                />
-                <div 
-                  className="absolute w-24 h-24 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle, var(--accent-secondary-glow) 0%, transparent 70%)',
-                    bottom: '30%',
-                    right: '25%',
-                    filter: 'blur(25px)',
-                  }}
-                />
-                {/* Center icon */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-6xl text-[var(--accent-primary)] opacity-30">{step.icon}</span>
-                </div>
+                {(() => {
+                  const AnimationComponent = stepAnimations[index];
+                  return <AnimationComponent />;
+                })()}
               </div>
             </div>
           ))}
