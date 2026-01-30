@@ -35,19 +35,19 @@ export default function Button({
   `;
 
   const variantStyles = {
-    primary: 'bg-[#1C1C1C] text-[#F6F3EE] border border-[#1C1C1C]',
-    secondary: 'bg-transparent text-[#1C1C1C] border border-[rgba(28,28,28,0.2)]',
+    primary: 'bg-[var(--accent-primary)] text-[#0a1520] border border-[var(--accent-primary)] font-semibold',
+    secondary: 'bg-transparent text-[var(--foreground)] border border-[var(--accent-primary)]/30 hover:border-[var(--accent-primary)]/60',
   };
 
   const combinedStyles = `${baseStyles} ${variantStyles[variant]} ${className}`;
 
   const hoverAnimation = {
     primary: {
-      backgroundColor: '#3a3a3a',
+      backgroundColor: '#06b6d4',
       scale: 1.02,
     },
     secondary: {
-      backgroundColor: 'rgba(232, 228, 222, 0.5)',
+      backgroundColor: 'rgba(34, 211, 238, 0.1)',
       scale: 1.02,
     },
   };

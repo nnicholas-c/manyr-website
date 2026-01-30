@@ -18,8 +18,8 @@ export default function Card({ children, className = '', hover = false, delay = 
     <motion.div
       ref={ref}
       className={`
-        bg-white/70 backdrop-blur-sm
-        border border-[rgba(28,28,28,0.06)]
+        bg-[#0d1a28]/60 backdrop-blur-md
+        border border-[var(--accent-primary)]/20
         rounded-2xl
         p-7 md:p-9
         ${hover ? 'cursor-pointer' : ''}
@@ -34,8 +34,8 @@ export default function Card({ children, className = '', hover = false, delay = 
       }}
       whileHover={hover ? { 
         y: -4,
-        boxShadow: '0 20px 40px -15px rgba(28, 28, 28, 0.08)',
-        borderColor: 'rgba(28, 28, 28, 0.12)',
+        boxShadow: '0 20px 40px -15px rgba(34, 211, 238, 0.15)',
+        borderColor: 'rgba(34, 211, 238, 0.4)',
         transition: { duration: 0.3, ease: 'easeOut' },
       } : undefined}
     >

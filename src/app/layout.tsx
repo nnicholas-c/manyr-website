@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased bg-[#F6F3EE] text-[#1C1C1C]">
+      <body className="antialiased bg-[var(--background)] text-[var(--foreground)]">
         <SmoothScroll>
           <CursorBlob />
           <GooeyTransitionLayer />

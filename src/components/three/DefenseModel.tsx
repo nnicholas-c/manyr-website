@@ -22,33 +22,33 @@ export default function DefenseModel({ progress }: DefenseModelProps) {
   // Smoothed progress for animation
   const easedProgress = easeInOutCubic(progress);
 
-  // Create materials
+  // Create materials - cyber theme
   const materials = useMemo(() => ({
     screen: new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#1a2a3a'),
+      color: new THREE.Color('#0d1a28'),
       metalness: 0.8,
       roughness: 0.2,
       emissive: new THREE.Color('#0a1520'),
       emissiveIntensity: 0.3,
     }),
     body: new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#2a3a4a'),
+      color: new THREE.Color('#1a2a3a'),
       metalness: 0.9,
       roughness: 0.3,
     }),
     accent: new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#D4D9A0'),
+      color: new THREE.Color('#22d3ee'),
       metalness: 0.5,
       roughness: 0.4,
-      emissive: new THREE.Color('#D4D9A0'),
-      emissiveIntensity: 0.2,
+      emissive: new THREE.Color('#22d3ee'),
+      emissiveIntensity: 0.4,
     }),
     glow: new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#4a8a9a'),
+      color: new THREE.Color('#14b8a6'),
       metalness: 0.3,
       roughness: 0.5,
-      emissive: new THREE.Color('#4a8a9a'),
-      emissiveIntensity: 0.5,
+      emissive: new THREE.Color('#14b8a6'),
+      emissiveIntensity: 0.6,
       transparent: true,
       opacity: 0.8,
     }),
@@ -151,7 +151,7 @@ export default function DefenseModel({ progress }: DefenseModelProps) {
         ))}
       </group>
       
-      {/* Glow points */}
+      {/* Glow points - cyan */}
       {[0, 1, 2].map((i) => (
         <mesh 
           key={`glow-${i}`} 
@@ -164,8 +164,8 @@ export default function DefenseModel({ progress }: DefenseModelProps) {
         >
           <sphereGeometry args={[1, 16, 16]} />
           <meshStandardMaterial
-            color="#D4D9A0"
-            emissive="#D4D9A0"
+            color="#22d3ee"
+            emissive="#22d3ee"
             emissiveIntensity={1}
             transparent
             opacity={0.8}

@@ -137,20 +137,20 @@ export default function GooeyMenu({ isOpen, onClose }: GooeyMenuProps) {
         {/* Gooey background */}
         <div
           ref={bgRef}
-          className="absolute inset-0 bg-[var(--background)]"
+          className="absolute inset-0 bg-[#0a1520]"
           style={{
             clipPath: 'circle(0% at 100% 0%)',
             filter: 'url(#gooey-filter)',
           }}
         >
-          {/* Background ellipses */}
+          {/* Background ellipses - cyber theme */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
             <div
               className="absolute w-[1000px] h-[1000px] rounded-full"
               style={{
-                background: 'var(--ellipse-lavender)',
+                background: 'var(--ellipse-cyan)',
                 filter: 'blur(150px)',
-                opacity: 0.5,
+                opacity: 0.6,
                 top: '-30%',
                 right: '-20%',
               }}
@@ -158,9 +158,9 @@ export default function GooeyMenu({ isOpen, onClose }: GooeyMenuProps) {
             <div
               className="absolute w-[800px] h-[800px] rounded-full"
               style={{
-                background: 'var(--ellipse-yellow)',
+                background: 'var(--ellipse-violet)',
                 filter: 'blur(150px)',
-                opacity: 0.4,
+                opacity: 0.5,
                 bottom: '-20%',
                 left: '-20%',
               }}
@@ -168,14 +168,26 @@ export default function GooeyMenu({ isOpen, onClose }: GooeyMenuProps) {
             <div
               className="absolute w-[600px] h-[600px] rounded-full"
               style={{
-                background: 'var(--ellipse-sage)',
+                background: 'var(--ellipse-teal)',
                 filter: 'blur(120px)',
-                opacity: 0.3,
+                opacity: 0.4,
                 top: '40%',
                 left: '30%',
               }}
             />
           </div>
+          
+          {/* HUD grid overlay */}
+          <div 
+            className="absolute inset-0 opacity-5"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(34, 211, 238, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, 0.3) 1px, transparent 1px)
+              `,
+              backgroundSize: '50px 50px',
+            }}
+          />
         </div>
 
         {/* Menu content */}
@@ -185,13 +197,13 @@ export default function GooeyMenu({ isOpen, onClose }: GooeyMenuProps) {
             <Link
               href="/"
               onClick={onClose}
-              className="text-xs font-medium tracking-[0.25em] opacity-60 hover:opacity-100 transition-opacity duration-300"
+              className="text-xs font-medium tracking-[0.25em] text-[var(--accent-primary)] opacity-60 hover:opacity-100 transition-opacity duration-300"
             >
               000
             </Link>
             <button
               onClick={onClose}
-              className="text-xs font-medium tracking-[0.2em] opacity-60 hover:opacity-100 transition-opacity duration-300 uppercase"
+              className="text-xs font-medium tracking-[0.2em] text-[var(--foreground)] opacity-60 hover:opacity-100 transition-opacity duration-300 uppercase"
               aria-label="Close menu"
             >
               CLOSE
@@ -213,10 +225,10 @@ export default function GooeyMenu({ isOpen, onClose }: GooeyMenuProps) {
                       onClick={onClose}
                       className="group flex items-baseline gap-4 md:gap-6"
                     >
-                      <span className="text-xs text-[var(--foreground-muted)] font-medium tracking-wider opacity-50 group-hover:opacity-100 transition-opacity">
+                      <span className="text-xs text-[var(--accent-primary)] font-medium tracking-wider opacity-50 group-hover:opacity-100 transition-opacity">
                         {item.number}
                       </span>
-                      <span className="heading-display text-[clamp(2rem,6vw,5rem)] tracking-[-0.03em] group-hover:opacity-40 transition-opacity duration-400">
+                      <span className="heading-display text-[clamp(2rem,6vw,5rem)] tracking-[-0.03em] text-[var(--foreground)] group-hover:text-[var(--accent-primary)] group-hover:opacity-70 transition-all duration-400">
                         {item.label}
                       </span>
                     </Link>
@@ -228,10 +240,10 @@ export default function GooeyMenu({ isOpen, onClose }: GooeyMenuProps) {
 
           {/* Footer */}
           <div className="max-w-[90rem] mx-auto w-full px-6 md:px-12 lg:px-20 py-8 flex items-center justify-between text-xs text-[var(--foreground-muted)] tracking-wide">
-            <span>Manyr</span>
+            <span className="text-[var(--accent-primary)]">Manyr</span>
             <a
               href="mailto:hello@manyr.ai"
-              className="hover:text-[var(--foreground)] transition-colors"
+              className="hover:text-[var(--accent-primary)] transition-colors"
             >
               hello@manyr.ai
             </a>

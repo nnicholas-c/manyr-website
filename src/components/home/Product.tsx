@@ -10,23 +10,27 @@ interface Step {
   title: string;
   description: string;
   gradient: string;
+  icon: string;
 }
 
 const steps: Step[] = [
   {
     title: 'Spot the risk',
     description: 'We monitor agent actions in real-time, detecting policy violations before they escalate.',
-    gradient: 'linear-gradient(135deg, #2a3a4a 0%, #1a2a3a 50%, #3a4a5a 100%)',
+    gradient: 'linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(20, 184, 166, 0.15) 100%)',
+    icon: '◎',
   },
   {
     title: 'Build guardrails',
     description: 'We build governance rules from the ground up—defining boundaries, permissions, and escalation paths for every agent.',
-    gradient: 'linear-gradient(135deg, #4a3a5a 0%, #3a2a4a 50%, #5a4a6a 100%)',
+    gradient: 'linear-gradient(135deg, rgba(167, 139, 250, 0.1) 0%, rgba(99, 102, 241, 0.15) 100%)',
+    icon: '⬡',
   },
   {
     title: 'Scale with confidence',
     description: 'We bring autonomous AI to production with the right controls, compliance, and oversight.',
-    gradient: 'linear-gradient(135deg, #3a4a3a 0%, #2a3a2a 50%, #4a5a4a 100%)',
+    gradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(34, 211, 238, 0.15) 100%)',
+    icon: '◇',
   },
 ];
 
@@ -107,16 +111,21 @@ export default function Product() {
     <section
       ref={sectionRef}
       id="product"
-      className="relative bg-white py-24 lg:py-32"
+      className="relative bg-[var(--background)] py-24 lg:py-32"
     >
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20">
+      {/* Background glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute w-[1000px] h-[1000px] rounded-full" style={{ background: 'var(--ellipse-cyan)', filter: 'blur(200px)', top: '20%', left: '-20%', opacity: 0.5 }} />
+      </div>
+
+      <div className="relative z-10 max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20">
         {/* Header */}
         <div ref={headerRef} className="flex justify-between items-start mb-20 lg:mb-28">
-          <h2 className="heading-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-0.02em] text-[#1a1a1a]">
+          <h2 className="heading-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-0.02em] text-[var(--foreground)]">
             How we work
           </h2>
-          <span className="text-xs font-medium tracking-[0.2em] text-[#666] uppercase hidden md:block">
-            002/ &nbsp;&nbsp; MISSION
+          <span className="text-xs font-mono tracking-[0.2em] text-[var(--accent-primary)] uppercase hidden md:block">
+            003/ &nbsp;&nbsp; PRODUCT
           </span>
         </div>
 
@@ -125,53 +134,63 @@ export default function Product() {
           {steps.map((step, index) => (
             <div 
               key={index} 
-              className="step-item grid lg:grid-cols-2 gap-12 lg:gap-20 items-center border-t border-[#e5e5e5] py-16 lg:py-20"
+              className="step-item grid lg:grid-cols-2 gap-12 lg:gap-20 items-center border-t border-[var(--border)] py-16 lg:py-20"
             >
               {/* Text content */}
               <div className="step-text" style={{ opacity: 0 }}>
-                <h3 className="heading-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.1] tracking-[-0.02em] text-[#1a1a1a] mb-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="text-[var(--accent-primary)] text-2xl">{step.icon}</span>
+                  <span className="text-xs font-mono tracking-wider text-[var(--foreground-subtle)]">
+                    00{index + 1}
+                  </span>
+                </div>
+                <h3 className="heading-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.1] tracking-[-0.02em] text-[var(--foreground)] mb-6">
                   {step.title}
                 </h3>
-                <p className="text-[#666] text-base md:text-lg leading-relaxed max-w-lg">
+                <p className="text-[var(--foreground-muted)] text-base md:text-lg leading-relaxed max-w-lg">
                   {step.description}
                 </p>
               </div>
 
               {/* Abstract visual */}
               <div 
-                className="step-image relative aspect-[4/3] rounded-lg overflow-hidden" 
+                className="step-image relative aspect-[4/3] rounded-2xl overflow-hidden border border-[var(--border)]" 
                 style={{ opacity: 0, background: step.gradient }}
               >
-                {/* Grid pattern overlay */}
+                {/* HUD Grid pattern overlay */}
                 <div 
-                  className="absolute inset-0 opacity-20"
+                  className="absolute inset-0 opacity-30"
                   style={{
                     backgroundImage: `
-                      linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+                      linear-gradient(var(--accent-primary-muted) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--accent-primary-muted) 1px, transparent 1px)
                     `,
-                    backgroundSize: '30px 30px',
+                    backgroundSize: '40px 40px',
                   }}
                 />
-                {/* Abstract blobs */}
+                {/* Abstract glows */}
                 <div 
                   className="absolute w-32 h-32 rounded-full"
                   style={{
-                    background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle, var(--accent-primary-glow) 0%, transparent 70%)',
                     top: '20%',
                     left: '20%',
-                    filter: 'blur(20px)',
+                    filter: 'blur(30px)',
                   }}
                 />
                 <div 
                   className="absolute w-24 h-24 rounded-full"
                   style={{
-                    background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle, var(--accent-secondary-glow) 0%, transparent 70%)',
                     bottom: '30%',
                     right: '25%',
-                    filter: 'blur(15px)',
+                    filter: 'blur(25px)',
                   }}
                 />
+                {/* Center icon */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-6xl text-[var(--accent-primary)] opacity-30">{step.icon}</span>
+                </div>
               </div>
             </div>
           ))}

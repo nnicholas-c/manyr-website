@@ -87,7 +87,7 @@ function ParticleField({ progress }: { progress: number }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.02}
-        color="#4a8a9a"
+        color="#22d3ee"
         transparent
         opacity={0.4 + progress * 0.3}
         sizeAttenuation
@@ -152,12 +152,12 @@ export default function Hero3DScene({ progress, className }: Hero3DSceneProps) {
           <pointLight 
             position={[-3, 2, -2]} 
             intensity={0.5} 
-            color="#4a8a9a" 
+            color="#22d3ee" 
           />
           <pointLight 
             position={[3, -1, 2]} 
             intensity={0.3 + progress * 0.5} 
-            color="#D4D9A0" 
+            color="#14b8a6" 
           />
           
           {/* Environment for reflections */}

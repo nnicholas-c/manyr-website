@@ -125,19 +125,19 @@ export default function DemoPreview() {
         {/* Minimal preview card */}
         <div
           ref={cardRef}
-          className="bg-white/40 backdrop-blur-sm border border-[var(--border)] rounded-2xl overflow-hidden"
+          className="bg-[#0d1a28]/60 backdrop-blur-md border border-[var(--accent-primary)]/20 rounded-2xl overflow-hidden"
           style={{ opacity: 0 }}
         >
-          <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border)]">
+          <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--accent-primary)]/10">
             {/* Input */}
             <div className="p-8 md:p-10">
-              <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider mb-4">
+              <p className="text-xs font-medium text-[var(--accent-primary)] uppercase tracking-wider mb-4">
                 Input
               </p>
-              <p className="text-base md:text-lg font-light mb-3">Agent request</p>
+              <p className="text-base md:text-lg font-light mb-3 text-[var(--foreground)]">Agent request</p>
               <p className="text-sm text-[var(--foreground-muted)]">
                 Claude wants to read{' '}
-                <code className="bg-[var(--background-alt)] px-2 py-1 rounded text-xs">
+                <code className="bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] px-2 py-1 rounded text-xs font-mono">
                   /etc/passwd
                 </code>
               </p>
@@ -145,10 +145,10 @@ export default function DemoPreview() {
 
             {/* Policy */}
             <div className="p-8 md:p-10">
-              <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider mb-4">
+              <p className="text-xs font-medium text-[var(--accent-primary)] uppercase tracking-wider mb-4">
                 Policy
               </p>
-              <p className="text-base md:text-lg font-light mb-3">Evaluation</p>
+              <p className="text-base md:text-lg font-light mb-3 text-[var(--foreground)]">Evaluation</p>
               <p className="text-sm text-[var(--foreground-muted)]">
                 Rule matched: Block access to system paths
               </p>
@@ -156,13 +156,13 @@ export default function DemoPreview() {
 
             {/* Output */}
             <div className="p-8 md:p-10">
-              <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider mb-4">
+              <p className="text-xs font-medium text-[var(--accent-primary)] uppercase tracking-wider mb-4">
                 Output
               </p>
-              <p className="text-base md:text-lg font-light mb-4">Decision</p>
+              <p className="text-base md:text-lg font-light mb-4 text-[var(--foreground)]">Decision</p>
               <span
                 ref={decisionRef}
-                className="inline-block px-4 py-2 bg-[#FFEBEE] text-[#C62828] text-xs font-semibold uppercase tracking-wider rounded-full"
+                className="inline-block px-4 py-2 bg-red-500/20 text-red-400 text-xs font-semibold uppercase tracking-wider rounded-full border border-red-500/30"
                 style={{ opacity: 0 }}
               >
                 DENY
@@ -171,7 +171,7 @@ export default function DemoPreview() {
           </div>
 
           {/* CTA */}
-          <div className="border-t border-[var(--border)] p-8 md:p-10 text-center bg-white/20">
+          <div className="border-t border-[var(--accent-primary)]/10 p-8 md:p-10 text-center bg-[#0d1a28]/40">
             <Button href="/demo" variant="secondary" className="group">
               <span>TRY THE PLAYGROUND</span>
               <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">

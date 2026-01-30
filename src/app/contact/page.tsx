@@ -24,13 +24,13 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-20 pb-16 relative flex items-center">
+    <div className="min-h-screen pt-20 pb-16 relative flex items-center bg-[#0a1520]">
       <BlurredEllipses
         ellipses={[
-          { color: '#F5EFE0', size: 600, x: '-10%', y: '20%', parallaxStrength: 0.08 },
-          { color: '#EDE8F5', size: 500, x: '70%', y: '10%', parallaxStrength: 0.1 },
-          { color: '#FDF6E3', size: 400, x: '80%', y: '60%', parallaxStrength: 0.06 },
-          { color: '#E8EDE5', size: 350, x: '20%', y: '70%', parallaxStrength: 0.12 },
+          { color: 'var(--ellipse-cyan)', size: 600, x: '-10%', y: '20%', parallaxStrength: 0.08 },
+          { color: 'var(--ellipse-violet)', size: 500, x: '70%', y: '10%', parallaxStrength: 0.1 },
+          { color: 'var(--ellipse-teal)', size: 400, x: '80%', y: '60%', parallaxStrength: 0.06 },
+          { color: 'var(--ellipse-blue)', size: 350, x: '20%', y: '70%', parallaxStrength: 0.12 },
         ]}
       />
 
@@ -42,11 +42,11 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="section-number block mb-4">005/</span>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light mb-8">
+            <span className="section-number block mb-4 text-[var(--accent-primary)]">005/</span>
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light mb-8 text-[var(--foreground)]">
               Have a seat.
             </h1>
-            <div className="space-y-6 text-lg text-[#4A4A4A] leading-relaxed">
+            <div className="space-y-6 text-lg text-[var(--foreground-muted)] leading-relaxed">
               <p>
                 We&apos;re building the governance infrastructure for autonomous AI. 
                 If you&apos;re deploying agents that touch sensitive systems, we&apos;d 
@@ -61,14 +61,14 @@ export default function ContactPage() {
 
             {/* Contact info */}
             <div className="mt-12 space-y-4">
-              <div className="flex items-center gap-3 text-[#4A4A4A]">
-                <span className="w-8 h-8 flex items-center justify-center bg-[#FAF9F6] rounded-full text-sm">
+              <div className="flex items-center gap-3 text-[var(--foreground-muted)]">
+                <span className="w-8 h-8 flex items-center justify-center bg-[var(--accent-primary)]/10 border border-[var(--accent-primary)]/30 rounded-full text-sm text-[var(--accent-primary)]">
                   @
                 </span>
                 <span>hello@manyr.ai</span>
               </div>
-              <div className="flex items-center gap-3 text-[#4A4A4A]">
-                <span className="w-8 h-8 flex items-center justify-center bg-[#FAF9F6] rounded-full text-sm">
+              <div className="flex items-center gap-3 text-[var(--foreground-muted)]">
+                <span className="w-8 h-8 flex items-center justify-center bg-[var(--accent-primary)]/10 border border-[var(--accent-primary)]/30 rounded-full text-sm text-[var(--accent-primary)]">
                   in
                 </span>
                 <span>linkedin.com/company/manyr</span>
@@ -82,7 +82,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            <div className="bg-white/70 backdrop-blur-sm border border-[rgba(28,28,28,0.08)] rounded-3xl p-8 md:p-10">
+            <div className="bg-[#0d1a28]/70 backdrop-blur-md border border-[var(--accent-primary)]/20 rounded-3xl p-8 md:p-10">
               {submitted ? (
                 <motion.div
                   className="text-center py-12"
@@ -90,21 +90,21 @@ export default function ContactPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4 }}
                 >
-                  <div className="w-16 h-16 bg-[#E8F5E9] rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg className="w-8 h-8 text-[#2E7D32]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-emerald-500/20 border border-emerald-500/40 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <h2 className="font-serif text-3xl mb-3">Message sent</h2>
-                  <p className="text-[#4A4A4A]">
+                  <h2 className="font-serif text-3xl mb-3 text-[var(--foreground)]">Message sent</h2>
+                  <p className="text-[var(--foreground-muted)]">
                     Thanks for reaching out. We&apos;ll get back to you within 24 hours.
                   </p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">
-                      Name <span className="text-[#C62828]">*</span>
+                    <label htmlFor="name" className="block text-sm font-medium mb-2 text-[var(--foreground)]">
+                      Name <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="text"
@@ -113,13 +113,13 @@ export default function ContactPage() {
                       onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                       required
                       placeholder="Your name"
-                      className="w-full bg-white/80"
+                      className="w-full bg-[#0a1520]/80 border border-[var(--accent-primary)]/20 text-[var(--foreground)] placeholder:text-[var(--foreground-muted)]/50 rounded-lg px-4 py-3 focus:outline-none focus:border-[var(--accent-primary)]/50"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">
-                      Work email <span className="text-[#C62828]">*</span>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2 text-[var(--foreground)]">
+                      Work email <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="email"
@@ -128,12 +128,12 @@ export default function ContactPage() {
                       onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                       required
                       placeholder="you@company.com"
-                      className="w-full bg-white/80"
+                      className="w-full bg-[#0a1520]/80 border border-[var(--accent-primary)]/20 text-[var(--foreground)] placeholder:text-[var(--foreground-muted)]/50 rounded-lg px-4 py-3 focus:outline-none focus:border-[var(--accent-primary)]/50"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="company" className="block text-sm font-medium mb-2">
+                    <label htmlFor="company" className="block text-sm font-medium mb-2 text-[var(--foreground)]">
                       Company
                     </label>
                     <input
@@ -142,12 +142,12 @@ export default function ContactPage() {
                       value={formState.company}
                       onChange={(e) => setFormState({ ...formState, company: e.target.value })}
                       placeholder="Your company name"
-                      className="w-full bg-white/80"
+                      className="w-full bg-[#0a1520]/80 border border-[var(--accent-primary)]/20 text-[var(--foreground)] placeholder:text-[var(--foreground-muted)]/50 rounded-lg px-4 py-3 focus:outline-none focus:border-[var(--accent-primary)]/50"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                    <label htmlFor="message" className="block text-sm font-medium mb-2 text-[var(--foreground)]">
                       How can we help?
                     </label>
                     <textarea
@@ -156,7 +156,7 @@ export default function ContactPage() {
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                       rows={4}
                       placeholder="Tell us about your use case, challenges, or questions..."
-                      className="w-full resize-none bg-white/80"
+                      className="w-full resize-none bg-[#0a1520]/80 border border-[var(--accent-primary)]/20 text-[var(--foreground)] placeholder:text-[var(--foreground-muted)]/50 rounded-lg px-4 py-3 focus:outline-none focus:border-[var(--accent-primary)]/50"
                     />
                   </div>
 
@@ -182,7 +182,7 @@ export default function ContactPage() {
                     )}
                   </Button>
 
-                  <p className="text-xs text-[#4A4A4A] text-center">
+                  <p className="text-xs text-[var(--foreground-muted)] text-center">
                     We respect your privacy. No spam, ever.
                   </p>
                 </form>

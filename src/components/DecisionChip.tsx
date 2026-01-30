@@ -9,11 +9,11 @@ interface DecisionChipProps {
   className?: string;
 }
 
-const decisionConfig: Record<DecisionType, { label: string; bg: string; color: string }> = {
-  allow: { label: 'Allow', bg: '#E8F5E9', color: '#2E7D32' },
-  deny: { label: 'Deny', bg: '#FFEBEE', color: '#C62828' },
-  approve: { label: 'Require Approval', bg: '#FFF3E0', color: '#E65100' },
-  constrain: { label: 'Constrain', bg: '#E3F2FD', color: '#1565C0' },
+const decisionConfig: Record<DecisionType, { label: string; bg: string; border: string; color: string }> = {
+  allow: { label: 'Allow', bg: 'rgba(16, 185, 129, 0.15)', border: 'rgba(16, 185, 129, 0.4)', color: '#34d399' },
+  deny: { label: 'Deny', bg: 'rgba(239, 68, 68, 0.15)', border: 'rgba(239, 68, 68, 0.4)', color: '#f87171' },
+  approve: { label: 'Require Approval', bg: 'rgba(251, 191, 36, 0.15)', border: 'rgba(251, 191, 36, 0.4)', color: '#fbbf24' },
+  constrain: { label: 'Constrain', bg: 'rgba(34, 211, 238, 0.15)', border: 'rgba(34, 211, 238, 0.4)', color: '#22d3ee' },
 };
 
 export default function DecisionChip({ decision, className = '' }: DecisionChipProps) {
@@ -26,9 +26,10 @@ export default function DecisionChip({ decision, className = '' }: DecisionChipP
         px-4 py-2
         text-xs font-semibold uppercase tracking-wider
         rounded-full
+        border
         ${className}
       `}
-      style={{ backgroundColor: config.bg, color: config.color }}
+      style={{ backgroundColor: config.bg, borderColor: config.border, color: config.color }}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}

@@ -10,7 +10,7 @@ import Link from 'next/link';
 const Hero3DScene = dynamic(() => import('../three/Hero3DScene'), {
   ssr: false,
   loading: () => (
-    <div className="absolute inset-0 bg-gradient-to-b from-[#1a2535] to-[#0a1520]" />
+    <div className="absolute inset-0 bg-gradient-to-b from-[var(--background)] to-[var(--background-alt)]" />
   ),
 });
 
@@ -114,9 +114,9 @@ export default function Hero() {
           className="absolute inset-0 z-[1] pointer-events-none transition-opacity duration-500"
           style={{
             background: `linear-gradient(to bottom, 
-              rgba(26, 37, 53, ${0.6 - scrollProgress * 0.3}) 0%, 
-              rgba(10, 21, 32, ${0.5 - scrollProgress * 0.2}) 50%,
-              rgba(10, 21, 32, ${0.7}) 100%
+              rgba(11, 17, 32, ${0.5 - scrollProgress * 0.2}) 0%, 
+              rgba(11, 17, 32, ${0.4 - scrollProgress * 0.15}) 50%,
+              rgba(11, 17, 32, ${0.6}) 100%
             )`,
           }}
         />
@@ -128,31 +128,31 @@ export default function Hero() {
           style={{ opacity: showHud ? 1 : 0 }}
         >
           {/* Corner brackets */}
-          <div className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-[#4a8a9a]/50" />
-          <div className="absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-[#4a8a9a]/50" />
-          <div className="absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-[#4a8a9a]/50" />
-          <div className="absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-[#4a8a9a]/50" />
+          <div className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-[var(--accent-primary)]/30" />
+          <div className="absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-[var(--accent-primary)]/30" />
+          <div className="absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-[var(--accent-primary)]/30" />
+          <div className="absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-[var(--accent-primary)]/30" />
           
           {/* Targeting reticle */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32">
             <svg viewBox="0 0 100 100" className="w-full h-full">
-              <circle cx="50" cy="50" r="40" fill="none" stroke="#4a8a9a" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.5" />
-              <line x1="50" y1="5" x2="50" y2="25" stroke="#4a8a9a" strokeWidth="0.5" opacity="0.7" />
-              <line x1="50" y1="75" x2="50" y2="95" stroke="#4a8a9a" strokeWidth="0.5" opacity="0.7" />
-              <line x1="5" y1="50" x2="25" y2="50" stroke="#4a8a9a" strokeWidth="0.5" opacity="0.7" />
-              <line x1="75" y1="50" x2="95" y2="50" stroke="#4a8a9a" strokeWidth="0.5" opacity="0.7" />
+              <circle cx="50" cy="50" r="40" fill="none" stroke="var(--accent-primary)" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.3" />
+              <line x1="50" y1="5" x2="50" y2="25" stroke="var(--accent-primary)" strokeWidth="0.5" opacity="0.5" />
+              <line x1="50" y1="75" x2="50" y2="95" stroke="var(--accent-primary)" strokeWidth="0.5" opacity="0.5" />
+              <line x1="5" y1="50" x2="25" y2="50" stroke="var(--accent-primary)" strokeWidth="0.5" opacity="0.5" />
+              <line x1="75" y1="50" x2="95" y2="50" stroke="var(--accent-primary)" strokeWidth="0.5" opacity="0.5" />
             </svg>
           </div>
           
           {/* Status indicators */}
-          <div className="absolute bottom-12 left-12 text-[10px] font-mono text-[#4a8a9a]/70 tracking-wider">
-            <div>STATUS: ACTIVE</div>
+          <div className="absolute bottom-12 left-12 text-[10px] font-mono text-[var(--accent-primary)]/60 tracking-wider">
+            <div>STATUS: <span className="text-[var(--status-active)]">ACTIVE</span></div>
             <div>MODE: GOVERNANCE</div>
             <div>PROGRESS: {Math.round(scrollProgress * 100)}%</div>
           </div>
           
-          <div className="absolute top-12 right-12 text-[10px] font-mono text-[#4a8a9a]/70 tracking-wider text-right">
-            <div>SYS: ONLINE</div>
+          <div className="absolute top-12 right-12 text-[10px] font-mono text-[var(--accent-primary)]/60 tracking-wider text-right">
+            <div>SYS: <span className="text-[var(--status-active)]">ONLINE</span></div>
             <div>AGENTS: MONITORED</div>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default function Hero() {
               opacity: scrollProgress > 0.5 ? 0 : 1 - scrollProgress,
             }}
           >
-            <div className="px-5 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] font-medium tracking-[0.2em] uppercase">
+            <div className="px-5 py-3 rounded-full bg-[var(--pill-bg)] backdrop-blur-sm border border-[var(--pill-border)] text-[var(--foreground)] text-[10px] font-medium tracking-[0.2em] uppercase">
               {badge.text}
             </div>
           </div>
@@ -179,7 +179,7 @@ export default function Hero() {
           className="relative z-10 max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20 w-full text-center h-full flex flex-col items-center justify-center transition-opacity duration-500"
           style={{ opacity: Math.max(0, 1 - scrollProgress * 2) }}
         >
-          <h1 className="font-serif font-light text-[clamp(3.5rem,14vw,11rem)] leading-[0.9] tracking-[-0.03em] text-white mb-10 md:mb-14">
+          <h1 className="font-serif font-light text-[clamp(3.5rem,14vw,11rem)] leading-[0.9] tracking-[-0.03em] text-[var(--foreground)] mb-10 md:mb-14">
             {lines.map((line, index) => (
               <span key={index} ref={(el) => { linesRef.current[index] = el; }} className="block" style={{ opacity: 0 }}>
                 {line}
@@ -187,12 +187,12 @@ export default function Hero() {
             ))}
           </h1>
 
-          <p ref={subtitleRef} className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-2xl mx-auto mb-12 md:mb-16 leading-relaxed font-light" style={{ opacity: 0 }}>
+          <p ref={subtitleRef} className="text-lg md:text-xl lg:text-2xl text-[var(--foreground-muted)] max-w-2xl mx-auto mb-12 md:mb-16 leading-relaxed font-light" style={{ opacity: 0 }}>
             We help enterprises govern autonomous<br className="hidden md:block" />AI agents at scale.
           </p>
 
           <div ref={ctaRef} style={{ opacity: 0 }}>
-            <Link href="#about" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#D4D9A0] text-[#1a1a1a] text-sm font-medium tracking-[0.1em] uppercase hover:scale-105 transition-transform duration-300">
+            <Link href="#about" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[var(--accent-tertiary)] text-[var(--background)] text-sm font-medium tracking-[0.1em] uppercase hover:scale-105 transition-transform duration-300">
               <span>KNOW MORE</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mt-0.5">
                 <path d="M6 2L6 10M6 10L2 6M6 10L10 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -206,8 +206,8 @@ export default function Hero() {
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 transition-opacity duration-500"
           style={{ opacity: scrollProgress < 0.1 ? 1 : 0 }}
         >
-          <span className="text-[10px] font-mono text-white/50 tracking-[0.2em] uppercase">Scroll to explore</span>
-          <div className="w-px h-8 bg-gradient-to-b from-white/50 to-transparent animate-pulse" />
+          <span className="text-[10px] font-mono text-[var(--foreground-subtle)] tracking-[0.2em] uppercase">Scroll to explore</span>
+          <div className="w-px h-8 bg-gradient-to-b from-[var(--accent-primary)]/50 to-transparent animate-pulse" />
         </div>
       </div>
     </section>

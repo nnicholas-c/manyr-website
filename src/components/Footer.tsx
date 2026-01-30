@@ -17,12 +17,12 @@ export default function Footer() {
 
   return (
     <footer ref={ref} className="relative overflow-hidden">
-      {/* Blurred ellipses - anima.ai style */}
+      {/* Blurred ellipses - cyber theme */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <motion.div
           className="absolute w-[700px] h-[700px] rounded-full"
           style={{
-            background: 'var(--ellipse-lavender)',
+            background: 'var(--ellipse-cyan)',
             filter: 'blur(150px)',
             opacity: 0.5,
             top: '-40%',
@@ -36,7 +36,7 @@ export default function Footer() {
         <motion.div
           className="absolute w-[500px] h-[500px] rounded-full"
           style={{
-            background: 'var(--ellipse-yellow)',
+            background: 'var(--ellipse-violet)',
             filter: 'blur(150px)',
             opacity: 0.4,
             bottom: '-30%',
@@ -49,7 +49,7 @@ export default function Footer() {
         <motion.div
           className="absolute w-[400px] h-[400px] rounded-full"
           style={{
-            background: 'var(--ellipse-sage)',
+            background: 'var(--ellipse-teal)',
             filter: 'blur(150px)',
             opacity: 0.4,
             bottom: '-20%',
@@ -61,11 +61,11 @@ export default function Footer() {
         />
       </div>
 
-      {/* "Have a seat!" CTA section - anima.ai style large text */}
-      <div className="relative z-10 border-b border-[var(--border)]">
+      {/* "Have a seat!" CTA section - cyber style large text */}
+      <div className="relative z-10 border-b border-[var(--accent-primary)]/20">
         <div className="max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20 py-24 md:py-32 lg:py-40 text-center">
           <motion.h2
-            className="heading-display text-[clamp(3rem,10vw,8rem)] mb-10"
+            className="heading-display text-[clamp(3rem,10vw,8rem)] mb-10 text-[var(--foreground)]"
             initial={{ opacity: 0, y: 50 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
@@ -79,7 +79,7 @@ export default function Footer() {
           >
             <Link
               href="/contact"
-              className="inline-flex items-center gap-3 text-xs font-medium tracking-[0.2em] uppercase text-[var(--foreground)] hover:opacity-50 transition-opacity duration-400"
+              className="inline-flex items-center gap-3 text-xs font-medium tracking-[0.2em] uppercase text-[var(--accent-primary)] hover:opacity-70 transition-opacity duration-400"
             >
               <span>CONTACT US</span>
               <motion.span
@@ -94,8 +94,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Footer links - minimal like anima.ai */}
-      <div className="relative z-10 bg-[var(--background)]">
+      {/* Footer links - minimal dark */}
+      <div className="relative z-10 bg-[#0a1520]">
         <div className="max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20 py-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <motion.div 
@@ -108,7 +108,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-xs text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors duration-300 tracking-[0.1em]"
+                  className="text-xs text-[var(--foreground-muted)] hover:text-[var(--accent-primary)] transition-colors duration-300 tracking-[0.1em]"
                   {...(link.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
                   {link.label}
@@ -123,7 +123,7 @@ export default function Footer() {
             >
               <Link 
                 href="/" 
-                className="text-xs font-medium tracking-[0.25em] opacity-50 hover:opacity-100 transition-opacity duration-300"
+                className="text-xs font-medium tracking-[0.25em] text-[var(--accent-primary)] opacity-50 hover:opacity-100 transition-opacity duration-300"
               >
                 000
               </Link>

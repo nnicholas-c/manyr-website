@@ -206,12 +206,12 @@ export default function DemoPage() {
   }, []);
 
   return (
-    <div className="min-h-screen pt-20 pb-16 relative">
+    <div className="min-h-screen pt-20 pb-16 relative bg-[#0a1520]">
       <BlurredEllipses
         ellipses={[
-          { color: '#EDE8F5', size: 500, x: '5%', y: '10%', parallaxStrength: 0.05 },
-          { color: '#FDF6E3', size: 400, x: '85%', y: '20%', parallaxStrength: 0.08 },
-          { color: '#E8EDE5', size: 350, x: '70%', y: '70%', parallaxStrength: 0.06 },
+          { color: 'var(--ellipse-cyan)', size: 500, x: '5%', y: '10%', parallaxStrength: 0.05 },
+          { color: 'var(--ellipse-violet)', size: 400, x: '85%', y: '20%', parallaxStrength: 0.08 },
+          { color: 'var(--ellipse-teal)', size: 350, x: '70%', y: '70%', parallaxStrength: 0.06 },
         ]}
         className="opacity-50"
       />
@@ -224,11 +224,11 @@ export default function DemoPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="section-number block mb-4">004/</span>
-          <h1 className="font-serif text-4xl md:text-5xl font-light mb-4">
+          <span className="section-number block mb-4 text-[var(--accent-primary)]">004/</span>
+          <h1 className="font-serif text-4xl md:text-5xl font-light mb-4 text-[var(--foreground)]">
             Policy Playground
           </h1>
-          <p className="text-lg text-[#4A4A4A] max-w-2xl">
+          <p className="text-lg text-[var(--foreground-muted)] max-w-2xl">
             Simulate how Manyr evaluates agent actions. Configure policies, 
             submit actions, and observe real-time decisions with full audit logging.
           </p>
@@ -238,25 +238,25 @@ export default function DemoPage() {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Column 1: Agent Action */}
           <motion.div
-            className="bg-white/60 backdrop-blur-sm border border-[rgba(28,28,28,0.08)] rounded-2xl p-6"
+            className="bg-[#0d1a28]/60 backdrop-blur-md border border-[var(--accent-primary)]/20 rounded-2xl p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h2 className="text-xs font-medium text-[#4A4A4A] uppercase tracking-wider mb-6">
+            <h2 className="text-xs font-medium text-[var(--accent-primary)] uppercase tracking-wider mb-6">
               Agent Action
             </h2>
 
             <div className="space-y-5">
               <div>
-                <label htmlFor="agent" className="block text-sm font-medium mb-2">
+                <label htmlFor="agent" className="block text-sm font-medium mb-2 text-[var(--foreground)]">
                   Agent Type
                 </label>
                 <select
                   id="agent"
                   value={selectedAgent}
                   onChange={(e) => setSelectedAgent(e.target.value)}
-                  className="w-full"
+                  className="w-full bg-[#0a1520] border border-[var(--accent-primary)]/20 text-[var(--foreground)] rounded-lg px-3 py-2"
                 >
                   {agents.map((agent) => (
                     <option key={agent} value={agent}>{agent}</option>
@@ -265,14 +265,14 @@ export default function DemoPage() {
               </div>
 
               <div>
-                <label htmlFor="tool" className="block text-sm font-medium mb-2">
+                <label htmlFor="tool" className="block text-sm font-medium mb-2 text-[var(--foreground)]">
                   Tool
                 </label>
                 <select
                   id="tool"
                   value={selectedTool}
                   onChange={(e) => setSelectedTool(e.target.value)}
-                  className="w-full"
+                  className="w-full bg-[#0a1520] border border-[var(--accent-primary)]/20 text-[var(--foreground)] rounded-lg px-3 py-2"
                 >
                   {tools.map((tool) => (
                     <option key={tool} value={tool}>{tool}</option>
@@ -282,19 +282,19 @@ export default function DemoPage() {
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="action" className="text-sm font-medium">
+                  <label htmlFor="action" className="text-sm font-medium text-[var(--foreground)]">
                     Proposed Action
                   </label>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setShowJsonTab(false)}
-                      className={`text-xs px-2 py-1 rounded ${!showJsonTab ? 'bg-[#1C1C1C] text-white' : 'text-[#4A4A4A]'}`}
+                      className={`text-xs px-2 py-1 rounded ${!showJsonTab ? 'bg-[var(--accent-primary)] text-[#0a1520]' : 'text-[var(--foreground-muted)]'}`}
                     >
                       Plain
                     </button>
                     <button
                       onClick={() => setShowJsonTab(true)}
-                      className={`text-xs px-2 py-1 rounded ${showJsonTab ? 'bg-[#1C1C1C] text-white' : 'text-[#4A4A4A]'}`}
+                      className={`text-xs px-2 py-1 rounded ${showJsonTab ? 'bg-[var(--accent-primary)] text-[#0a1520]' : 'text-[var(--foreground-muted)]'}`}
                     >
                       JSON
                     </button>
@@ -306,7 +306,7 @@ export default function DemoPage() {
                     value={`{\n  "action": "${actionInput}",\n  "tool": "${selectedTool}",\n  "agent": "${selectedAgent}"\n}`}
                     readOnly
                     rows={5}
-                    className="w-full font-mono text-xs resize-none"
+                    className="w-full font-mono text-xs resize-none bg-[#0a1520] border border-[var(--accent-primary)]/20 text-[var(--accent-primary)] rounded-lg px-3 py-2"
                   />
                 ) : (
                   <textarea
@@ -315,20 +315,20 @@ export default function DemoPage() {
                     onChange={(e) => setActionInput(e.target.value)}
                     placeholder="Describe the action..."
                     rows={3}
-                    className="w-full resize-none"
+                    className="w-full resize-none bg-[#0a1520] border border-[var(--accent-primary)]/20 text-[var(--foreground)] placeholder:text-[var(--foreground-muted)]/50 rounded-lg px-3 py-2"
                   />
                 )}
               </div>
 
               {/* Example actions */}
               <div>
-                <p className="text-xs text-[#4A4A4A] mb-2">Try an example:</p>
+                <p className="text-xs text-[var(--foreground-muted)] mb-2">Try an example:</p>
                 <div className="flex flex-wrap gap-2">
                   {exampleActions.map((example, i) => (
                     <button
                       key={i}
                       onClick={() => selectExample(example)}
-                      className="text-xs px-2 py-1.5 bg-[#FAF9F6] border border-[rgba(28,28,28,0.08)] rounded-lg hover:bg-[#E8E4DE] transition-colors text-left"
+                      className="text-xs px-2 py-1.5 bg-[var(--accent-primary)]/5 border border-[var(--accent-primary)]/20 rounded-lg hover:bg-[var(--accent-primary)]/10 hover:border-[var(--accent-primary)]/40 transition-colors text-left text-[var(--foreground-muted)]"
                     >
                       {example.label}
                     </button>
@@ -345,12 +345,12 @@ export default function DemoPage() {
 
           {/* Column 2: Policy */}
           <motion.div
-            className="bg-white/60 backdrop-blur-sm border border-[rgba(28,28,28,0.08)] rounded-2xl p-6"
+            className="bg-[#0d1a28]/60 backdrop-blur-md border border-[var(--accent-primary)]/20 rounded-2xl p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h2 className="text-xs font-medium text-[#4A4A4A] uppercase tracking-wider mb-6">
+            <h2 className="text-xs font-medium text-[var(--accent-primary)] uppercase tracking-wider mb-6">
               Policy
             </h2>
 
@@ -397,10 +397,10 @@ export default function DemoPage() {
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="riskTolerance" className="text-sm font-medium">
+                  <label htmlFor="riskTolerance" className="text-sm font-medium text-[var(--foreground)]">
                     Risk Tolerance
                   </label>
-                  <span className="text-sm text-[#4A4A4A]">{policy.riskTolerance}%</span>
+                  <span className="text-sm text-[var(--accent-primary)]">{policy.riskTolerance}%</span>
                 </div>
                 <input
                   type="range"
@@ -409,8 +409,9 @@ export default function DemoPage() {
                   max="100"
                   value={policy.riskTolerance}
                   onChange={(e) => setPolicy({ ...policy, riskTolerance: parseInt(e.target.value) })}
+                  className="w-full accent-[var(--accent-primary)]"
                 />
-                <div className="flex justify-between text-xs text-[#4A4A4A] mt-1">
+                <div className="flex justify-between text-xs text-[var(--foreground-muted)] mt-1">
                   <span>Strict</span>
                   <span>Permissive</span>
                 </div>
@@ -420,12 +421,12 @@ export default function DemoPage() {
 
           {/* Column 3: Decision + Audit Log */}
           <motion.div
-            className="bg-white/60 backdrop-blur-sm border border-[rgba(28,28,28,0.08)] rounded-2xl p-6"
+            className="bg-[#0d1a28]/60 backdrop-blur-md border border-[var(--accent-primary)]/20 rounded-2xl p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h2 className="text-xs font-medium text-[#4A4A4A] uppercase tracking-wider mb-6">
+            <h2 className="text-xs font-medium text-[var(--accent-primary)] uppercase tracking-wider mb-6">
               Decision + Audit Log
             </h2>
 
@@ -434,7 +435,7 @@ export default function DemoPage() {
               {currentDecision && (
                 <motion.div
                   key={currentDecision.decision + currentDecision.riskScore}
-                  className="mb-6 p-4 bg-[#FAF9F6] rounded-xl"
+                  className="mb-6 p-4 bg-[#0a1520]/80 border border-[var(--accent-primary)]/10 rounded-xl"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
@@ -442,22 +443,22 @@ export default function DemoPage() {
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <DecisionChip decision={currentDecision.decision} />
-                    <span className="text-sm text-[#4A4A4A]">
+                    <span className="text-sm text-[var(--foreground-muted)]">
                       Risk: {(currentDecision.riskScore * 100).toFixed(0)}%
                     </span>
                   </div>
                   <div className="text-sm">
-                    <p className="text-[#1C1C1C] font-medium">{currentDecision.rule}</p>
-                    <p className="text-[#4A4A4A] mt-1">{currentDecision.rationale}</p>
+                    <p className="text-[var(--foreground)] font-medium">{currentDecision.rule}</p>
+                    <p className="text-[var(--foreground-muted)] mt-1">{currentDecision.rationale}</p>
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
             {/* Audit Log */}
-            <div className="border-t border-[rgba(28,28,28,0.08)] pt-4">
+            <div className="border-t border-[var(--accent-primary)]/10 pt-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xs font-medium text-[#4A4A4A] uppercase tracking-wider">
+                <h3 className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
                   Audit Log ({auditLog.length})
                 </h3>
                 {auditLog.length > 0 && (
@@ -472,26 +473,26 @@ export default function DemoPage() {
                   {auditLog.map((entry) => (
                     <motion.div
                       key={entry.id}
-                      className="p-3 bg-[#FAF9F6] rounded-lg text-xs"
+                      className="p-3 bg-[#0a1520]/80 border border-[var(--accent-primary)]/10 rounded-lg text-xs"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3 }}
                     >
                       <div className="flex items-center justify-between mb-2">
                         <DecisionChip decision={entry.decision} className="!text-[10px] !px-2 !py-1" />
-                        <span className="text-[#4A4A4A]">
+                        <span className="text-[var(--foreground-muted)]">
                           {new Date(entry.timestamp).toLocaleTimeString()}
                         </span>
                       </div>
-                      <p className="text-[#1C1C1C] font-medium truncate">{entry.action}</p>
-                      <div className="flex items-center gap-3 mt-1 text-[#4A4A4A]">
+                      <p className="text-[var(--foreground)] font-medium truncate">{entry.action}</p>
+                      <div className="flex items-center gap-3 mt-1 text-[var(--foreground-muted)]">
                         <span>{entry.agent}</span>
                         <span>•</span>
                         <span>{entry.tool}</span>
                         {entry.approver && (
                           <>
                             <span>•</span>
-                            <span className="text-[#E65100]">Approved by {entry.approver}</span>
+                            <span className="text-amber-400">Approved by {entry.approver}</span>
                           </>
                         )}
                       </div>
@@ -500,7 +501,7 @@ export default function DemoPage() {
                 </AnimatePresence>
 
                 {auditLog.length === 0 && (
-                  <p className="text-sm text-[#4A4A4A] text-center py-8">
+                  <p className="text-sm text-[var(--foreground-muted)] text-center py-8">
                     No audit entries yet. Evaluate an action to see results.
                   </p>
                 )}
@@ -514,31 +515,31 @@ export default function DemoPage() {
       <AnimatePresence>
         {showApprovalModal && pendingEntry && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl"
+              className="bg-[#0d1a28] border border-[var(--accent-primary)]/30 rounded-2xl p-8 max-w-md w-full shadow-2xl"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', damping: 20 }}
             >
               <div className="text-center mb-6">
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-[#FFF3E0] rounded-full mb-4">
-                  <span className="text-[#E65100] text-xl">!</span>
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-500/20 border border-amber-500/40 rounded-full mb-4">
+                  <span className="text-amber-400 text-xl">!</span>
                 </div>
-                <h3 className="font-serif text-2xl mb-2">Approval Required</h3>
-                <p className="text-[#4A4A4A]">
+                <h3 className="font-serif text-2xl mb-2 text-[var(--foreground)]">Approval Required</h3>
+                <p className="text-[var(--foreground-muted)]">
                   This action requires administrator authorization.
                 </p>
               </div>
 
-              <div className="bg-[#FAF9F6] rounded-xl p-4 mb-6">
-                <p className="text-sm font-medium text-[#1C1C1C] mb-2">{pendingEntry.action}</p>
-                <div className="flex items-center gap-3 text-xs text-[#4A4A4A]">
+              <div className="bg-[#0a1520] border border-[var(--accent-primary)]/10 rounded-xl p-4 mb-6">
+                <p className="text-sm font-medium text-[var(--foreground)] mb-2">{pendingEntry.action}</p>
+                <div className="flex items-center gap-3 text-xs text-[var(--foreground-muted)]">
                   <span>{pendingEntry.agent}</span>
                   <span>•</span>
                   <span>{pendingEntry.tool}</span>

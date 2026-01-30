@@ -27,27 +27,28 @@ export default function ToggleSwitch({
           w-11 h-6
           rounded-full
           transition-colors duration-200
-          focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1C1C1C] focus-visible:ring-offset-2
-          ${checked ? 'bg-[#1C1C1C]' : 'bg-[rgba(28,28,28,0.15)]'}
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a1520]
+          ${checked ? 'bg-[var(--accent-primary)]' : 'bg-[rgba(34,211,238,0.2)]'}
         `}
       >
         <span
           className={`
             absolute top-0.5 left-0.5
             w-5 h-5
-            bg-white
+            bg-[#0a1520]
             rounded-full
             transition-transform duration-200
+            shadow-sm
             ${checked ? 'translate-x-5' : 'translate-x-0'}
           `}
         />
       </button>
       <div className="flex-1">
-        <label htmlFor={id} className="text-sm font-medium cursor-pointer">
+        <label htmlFor={id} className="text-sm font-medium cursor-pointer text-[var(--foreground)]">
           {label}
         </label>
         {description && (
-          <p className="text-xs text-[#4A4A4A] mt-0.5">{description}</p>
+          <p className="text-xs text-[var(--foreground-muted)] mt-0.5">{description}</p>
         )}
       </div>
     </div>

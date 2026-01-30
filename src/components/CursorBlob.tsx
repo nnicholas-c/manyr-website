@@ -10,9 +10,9 @@ interface CursorBlobProps {
 }
 
 export default function CursorBlob({
-  color = 'var(--ellipse-lavender)',
+  color = 'var(--accent-primary-glow)',
   size = 400,
-  trailColor = 'var(--ellipse-yellow)'
+  trailColor = 'var(--accent-secondary-glow)'
 }: CursorBlobProps) {
   const blobRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);

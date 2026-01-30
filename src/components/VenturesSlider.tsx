@@ -162,7 +162,7 @@ export default function VenturesSlider({ ventures }: VenturesSliderProps) {
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className="w-12 h-12 flex items-center justify-center border border-[var(--border-strong)] rounded-full transition-all duration-300 hover:bg-[var(--accent-warm-gray)] disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-12 h-12 flex items-center justify-center border border-[var(--accent-primary)]/30 rounded-full transition-all duration-300 hover:bg-[var(--accent-primary)]/10 hover:border-[var(--accent-primary)]/50 disabled:opacity-30 disabled:cursor-not-allowed"
             aria-label="Previous slide"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -172,7 +172,7 @@ export default function VenturesSlider({ ventures }: VenturesSliderProps) {
           <button
             onClick={handleNext}
             disabled={currentIndex >= totalSlides - visibleCards}
-            className="w-12 h-12 flex items-center justify-center border border-[var(--border-strong)] rounded-full transition-all duration-300 hover:bg-[var(--accent-warm-gray)] disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-12 h-12 flex items-center justify-center border border-[var(--accent-primary)]/30 rounded-full transition-all duration-300 hover:bg-[var(--accent-primary)]/10 hover:border-[var(--accent-primary)]/50 disabled:opacity-30 disabled:cursor-not-allowed"
             aria-label="Next slide"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -215,9 +215,9 @@ export default function VenturesSlider({ ventures }: VenturesSliderProps) {
               aria-roledescription="slide"
               aria-label={`${index + 1} of ${totalSlides}`}
             >
-              <div className="bg-white/50 backdrop-blur-sm border border-[var(--border)] rounded-2xl p-8 md:p-10 h-full">
+              <div className="bg-[#0d1a28]/60 backdrop-blur-md border border-[var(--accent-primary)]/20 rounded-2xl p-8 md:p-10 h-full">
                 {venture.category && (
-                  <span className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider mb-4 block">
+                  <span className="text-xs font-medium text-[var(--accent-primary)] uppercase tracking-wider mb-4 block">
                     {venture.category}
                   </span>
                 )}
@@ -237,7 +237,7 @@ export default function VenturesSlider({ ventures }: VenturesSliderProps) {
       <div className="mt-10 md:mt-14">
         <a
           href="#ventures"
-          className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.15em] uppercase text-[var(--foreground)] hover:opacity-50 transition-opacity duration-300"
+          className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.15em] uppercase text-[var(--accent-primary)] hover:opacity-70 transition-opacity duration-300"
         >
           <span>DISCOVER ALL VENTURES</span>
           <span>→</span>
