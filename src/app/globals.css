@@ -2,34 +2,39 @@
 @import "tailwindcss";
 
 :root {
-  /* Backgrounds - warm, refined palette */
-  --background: #FAF8F5;
-  --background-alt: #FFFDF8;
-  --foreground: #1A1A1A;
-  --foreground-muted: #5C5C5C;
+  /* Backgrounds - anima.ai sage/gray-green palette */
+  --background: #C5CEC7;
+  --background-alt: #BDC7BF;
+  --foreground: #FFFFFF;
+  --foreground-dark: #1A1A1A;
+  --foreground-muted: rgba(255, 255, 255, 0.7);
 
-  /* Accents - softer, more muted */
-  --accent-cream: #F5EFE6;
-  --accent-yellow: #FEF5E0;
-  --accent-lavender: #EDE8F5;
-  --accent-sage: #E5F0E3;
-  --accent-warm-gray: #EDE9E3;
-  --accent-peach: #FDF0E8;
-  --accent-mint: #E3F2EE;
+  /* Accents - muted, organic tones */
+  --accent-cream: rgba(255, 255, 255, 0.15);
+  --accent-yellow: #D4D9A0;
+  --accent-lavender: rgba(255, 255, 255, 0.12);
+  --accent-sage: #B8C4BA;
+  --accent-warm-gray: rgba(255, 255, 255, 0.08);
+  --accent-peach: #E8D5C8;
+  --accent-mint: #C5D8D0;
 
   /* Borders */
-  --border: rgba(26, 26, 26, 0.06);
-  --border-strong: rgba(26, 26, 26, 0.12);
+  --border: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.25);
 
-  /* Ellipse colors - MORE VIBRANT for visual impact like anima.ai */
-  --ellipse-cream: #F5E6D3;
-  --ellipse-yellow: #FCEAB8;
-  --ellipse-lavender: #DDD0F5;
-  --ellipse-sage: #C5E8B8;
-  --ellipse-peach: #FDDCC8;
-  --ellipse-mint: #B8E8DC;
-  --ellipse-rose: #F5D0DC;
-  --ellipse-sky: #C8E0F5;
+  /* Pill/Badge colors - subtle, translucent */
+  --pill-bg: rgba(255, 255, 255, 0.12);
+  --pill-border: rgba(255, 255, 255, 0.2);
+  
+  /* Ellipse colors - very subtle for sage background */
+  --ellipse-cream: rgba(245, 230, 211, 0.3);
+  --ellipse-yellow: rgba(212, 217, 160, 0.25);
+  --ellipse-lavender: rgba(200, 195, 220, 0.2);
+  --ellipse-sage: rgba(180, 200, 175, 0.25);
+  --ellipse-peach: rgba(232, 213, 200, 0.2);
+  --ellipse-mint: rgba(197, 216, 208, 0.2);
+  --ellipse-rose: rgba(220, 200, 210, 0.15);
+  --ellipse-sky: rgba(200, 215, 230, 0.15);
 
   /* Animation timing */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -197,6 +202,22 @@ body {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--foreground-muted);
+}
+
+/* Floating pill badges - anima.ai style */
+.floating-pill {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--pill-bg);
+  border: 1px solid var(--pill-border);
+  border-radius: 9999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  white-space: nowrap;
 }
 
 /* Blurred ellipse base */

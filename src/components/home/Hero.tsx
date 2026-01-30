@@ -2,177 +2,102 @@
 
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { BlurredEllipses, Button } from '@/components';
+import Link from 'next/link';
+
+interface FloatingBadge {
+  text: string;
+  position: { top?: string; bottom?: string; left?: string; right?: string };
+}
+
+const floatingBadges: FloatingBadge[] = [
+  { text: "AUTONOMOUS INTELLIGENCE", position: { top: '15%', left: '8%' } },
+  { text: "ENTERPRISE CONTROL", position: { bottom: '20%', left: '5%' } },
+  { text: "AGENT GOVERNANCE", position: { top: '25%', right: '6%' } },
+];
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const linesRef = useRef<(HTMLSpanElement | null)[]>([]);
-  const pillarsRef = useRef<HTMLDivElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const sectionIndicatorRef = useRef<HTMLDivElement>(null);
+  const badgesRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const lines = ['Governing', 'autonomous', 'AI agents'];
-  const pillars = [
-    "→ Technology's power to transform work",
-    "→ Autonomy's need for accountability",
-    "→ Enterprise's demand for control",
-  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Check for reduced motion
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       if (prefersReducedMotion) {
-        gsap.set([...linesRef.current, pillarsRef.current, ctaRef.current, sectionIndicatorRef.current], {
-          opacity: 1,
-          y: 0,
-          filter: 'blur(0px)',
+        gsap.set([...linesRef.current, subtitleRef.current, ctaRef.current, ...badgesRef.current], {
+          opacity: 1, y: 0,
         });
         return;
       }
 
-      // Create master timeline
-      const tl = gsap.timeline({ delay: 0.3 });
+      const tl = gsap.timeline({ delay: 0.2 });
 
-      // Headline lines reveal with blur-in effect - staggered
       linesRef.current.forEach((line, index) => {
         if (line) {
-          tl.fromTo(
-            line,
-            {
-              opacity: 0,
-              y: 80,
-              filter: 'blur(20px)',
-            },
-            {
-              opacity: 1,
-              y: 0,
-              filter: 'blur(0px)',
-              duration: 1,
-              ease: 'power2.out',
-            },
-            index * 0.15
-          );
+          tl.fromTo(line, { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, index * 0.1);
         }
       });
 
-      // Pillar statements fade in with stagger
-      if (pillarsRef.current) {
-        const pillarItems = pillarsRef.current.children;
-        tl.fromTo(
-          pillarItems,
-          {
-            opacity: 0,
-            y: 30,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.12,
-            ease: 'power2.out',
-          },
-          '-=0.3'
-        );
+      if (subtitleRef.current) {
+        tl.fromTo(subtitleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.5');
       }
 
-      // CTA buttons fade in
       if (ctaRef.current) {
-        tl.fromTo(
-          ctaRef.current,
-          {
-            opacity: 0,
-            y: 20,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power2.out',
-          },
-          '-=0.3'
-        );
+        tl.fromTo(ctaRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4');
       }
 
-      // Section indicator
-      if (sectionIndicatorRef.current) {
-        tl.fromTo(
-          sectionIndicatorRef.current,
-          {
-            opacity: 0,
-          },
-          {
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power2.out',
-          },
-          '-=0.2'
-        );
-      }
+      badgesRef.current.forEach((badge, index) => {
+        if (badge) {
+          tl.fromTo(badge, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' }, 0.6 + index * 0.1);
+        }
+      });
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={heroRef}
-      className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden pt-32 pb-16 md:pb-20"
-    >
-      <BlurredEllipses
-        ellipses={[
-          { color: 'var(--ellipse-yellow)', size: 1100, x: '-25%', y: '-15%', parallaxStrength: 0.02 },
-          { color: 'var(--ellipse-lavender)', size: 900, x: '70%', y: '-10%', parallaxStrength: 0.03 },
-          { color: 'var(--ellipse-peach)', size: 800, x: '85%', y: '55%', parallaxStrength: 0.025 },
-          { color: 'var(--ellipse-sage)', size: 700, x: '-10%', y: '65%', parallaxStrength: 0.035 },
-          { color: 'var(--ellipse-mint)', size: 600, x: '40%', y: '80%', parallaxStrength: 0.04 },
-        ]}
-      />
-
-      <div className="relative z-10 max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20 w-full">
-        <div className="max-w-5xl">
-          {/* Animated headline */}
-          <h1 className="heading-display text-[clamp(3rem,10vw,8rem)] leading-[1.05] tracking-[-0.03em] mb-16 md:mb-20">
-            {lines.map((line, index) => (
-              <span
-                key={index}
-                ref={(el) => { linesRef.current[index] = el; }}
-                className="block"
-                style={{ opacity: 0 }}
-              >
-                {line}
-              </span>
-            ))}
-          </h1>
-
-          {/* Three pillar statements */}
-          <div ref={pillarsRef} className="space-y-4 md:space-y-5 mb-12 md:mb-16">
-            {pillars.map((pillar, index) => (
-              <p
-                key={index}
-                className="text-base md:text-lg text-[var(--foreground)] leading-relaxed"
-                style={{ opacity: 0 }}
-              >
-                {pillar}
-              </p>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div ref={ctaRef} className="flex flex-wrap gap-4" style={{ opacity: 0 }}>
-            <Button href="/demo" variant="secondary" className="group">
-              <span>DISCOVER</span>
-              <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">
-                →
-              </span>
-            </Button>
+    <section ref={heroRef} className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+      {/* Background with image */}
+      <div className="absolute inset-0" style={{ backgroundImage: "url('/images/hero-bg.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
+      {/* Dark overlay for contrast */}
+      <div className="absolute inset-0 bg-[#1a2535]/70" />
+      
+      {/* Floating pill badges */}
+      {floatingBadges.map((badge, index) => (
+        <div key={index} ref={(el) => { badgesRef.current[index] = el; }} className="absolute z-20 hidden lg:block" style={{ ...badge.position, opacity: 0 }}>
+          <div className="px-5 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] font-medium tracking-[0.2em] uppercase">
+            {badge.text}
           </div>
         </div>
+      ))}
 
-        {/* Section indicator */}
-        <div ref={sectionIndicatorRef} className="mt-20 md:mt-28" style={{ opacity: 0 }}>
-          <div className="section-number">001/ ABOUT</div>
+      {/* Main content */}
+      <div className="relative z-10 max-w-[90rem] mx-auto px-6 md:px-12 lg:px-20 w-full text-center py-20">
+        <h1 className="font-serif font-light text-[clamp(3.5rem,14vw,11rem)] leading-[0.9] tracking-[-0.03em] text-white mb-10 md:mb-14">
+          {lines.map((line, index) => (
+            <span key={index} ref={(el) => { linesRef.current[index] = el; }} className="block" style={{ opacity: 0 }}>
+              {line}
+            </span>
+          ))}
+        </h1>
+
+        <p ref={subtitleRef} className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-2xl mx-auto mb-12 md:mb-16 leading-relaxed font-light" style={{ opacity: 0 }}>
+          We help enterprises govern autonomous<br className="hidden md:block" />AI agents at scale.
+        </p>
+
+        <div ref={ctaRef} style={{ opacity: 0 }}>
+          <Link href="#about" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#D4D9A0] text-[#1a1a1a] text-sm font-medium tracking-[0.1em] uppercase hover:scale-105 transition-transform duration-300">
+            <span>KNOW MORE</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mt-0.5">
+              <path d="M6 2L6 10M6 10L2 6M6 10L10 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </Link>
         </div>
       </div>
     </section>
